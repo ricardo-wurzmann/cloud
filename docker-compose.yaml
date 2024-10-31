@@ -1,0 +1,23 @@
+services:
+  db:
+    image: postgres:15
+    container_name: postgres_container
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB:-mydatabase}  # Usando o valor do .env ou padrão
+      - POSTGRES_USER=${POSTGRES_USER:-user}  # Usando o valor do .env ou padrão
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-password}  # Usando o valor do .env ou padrão
+    ports:
+      - "5432:5432"
+
+  app:
+    restart: always
+    image: ricardowurzmann/cloud-projeto:latest
+    container_name: fastapi_app
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-user}:${POSTGRES_PASSWORD:-password}@db:5432/${POSTGRES_DB:-mydatabase}  # Construindo a URL com variáveis
+      - DB_PORT=5432
+      - API_KEY=15cfe02b82msh84be3d25168c166p145b20jsn87329f715d09  
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
