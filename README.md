@@ -96,23 +96,26 @@ O arquivo docker-compose.yaml está localizado na raiz do projeto.
 
 
 
-#AWS:
+# AWS:
 Abaixo está a parte que configurei meu projeto na AWS
 [Video demostrando conhecimento sobre AWS](https://youtu.be/5ntRnw5WX9U)
 
-Os arquivos de configuração do Kubernetes utilizados neste projeto estão disponíveis em [este repositório do GitHub](https://github.com/ricardo-wurzmann/cloud/). Eles incluem as definições de Deployment e Service tanto para a aplicação FastAPI quanto para o banco de dados PostgreSQL.
+Os arquivos de configuração do Kubernetes utilizados neste projeto estão disponíveis em [este repositório do GitHub](https://github.com/ricardo-wurzmann/cloud/). 
 
-Após a criação dos documento app.yaml e postgres.yaml (localizados na raíz do projeto) foi feito os seguintes comandos no cloudShell (onde utilizei para configurar):
-
-app.yaml: Contém o Deployment e o Service para a aplicação FastAPI.
+### Foi criado:
+- app.yaml: Contém o Deployment e o Service para a aplicação FastAPI.
     Deployment: Define a imagem Docker, variáveis de ambiente, portas e réplicas.
     Service: Configura um LoadBalancer para expor a aplicação externamente.
     
-postgres.yaml: Inclui o Deployment e o Service para o banco de dados PostgreSQL.
+- postgres.yaml: Inclui o Deployment e o Service para o banco de dados PostgreSQL.
     Deployment: Especifica a imagem do PostgreSQL e as credenciais.
     Service: Permite que a aplicação se comunique com o banco de dados dentro do cluster.
 
 
+### Após a criação dos documento app.yaml e postgres.yaml (localizados na raíz do projeto) foi feito os seguintes comandos no cloudShell (onde utilizei para configurar):
+```
 kubectl apply -f deployment.yaml
+```
+```
 kubectl apply -f service.yaml
-
+```
