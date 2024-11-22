@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fastapi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fastapi
+  template:
+    metadata:
+      labels:
+        app: fastapi
+    spec:
+      containers:
+        - name: fastapi
+          image: ricardowurzmann/cloud-projeto:latest
+          ports:
+            - containerPort: 8000
+          env:
+            - name: DB_PORT
+              value: "5432"
+            - name: API_KEY
+              value: "15cfe02b82msh84be3d25168c166p145b20jsn87329f715d09"
+            - name: POSTGRES_DB
+              value: "mydatabase"
+            - name: POSTGRES_USER
+              value: "user"
+            - name: POSTGRES_PASSWORD
+              value: "password"
+            - name: DATABASE_URL
+              value: "postgresql://user:password@db:5432/mydatabase"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fastapi-service
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 8000
+  selector:
+    app: fastapi
